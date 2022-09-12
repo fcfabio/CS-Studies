@@ -1,3 +1,6 @@
+//Listas Duplamente Encadeadas
+
+
 // Listas Dinamicas Encadeadas
 
 // Bibliotecas
@@ -12,9 +15,14 @@ struct Node {
     Node* prev;
 };
 
+struct Lista{
+    Node* inicio = nullptr;
+    Node* fim = nullptr;
+};
+
 // Função para imprimir a lista
-void print(Node *ini) {
-    Node *aux = ini;
+void print(Lista lista) {
+    Node *aux = lista.inicio;
     while (aux != nullptr) {
         cout << aux->dado << " ";
         aux = aux->next;
@@ -23,93 +31,95 @@ void print(Node *ini) {
 }
 
 // Função para inserir no início
-void insert(Node* &ini, int elemento, Node* &fim){
-    if(ini == nullptr){ // Lista vazia
+void insert(Lista &lista, int elemento){
+    if(lista.inicio == nullptr){ // Lista vazia
         Node* aux = new Node();
         aux -> dado = elemento;
         aux -> next = nullptr;
         aux -> prev = nullptr;
-        ini = aux;
-        fim = ini;
+        lista.inicio = aux;
+        lista.fim = lista.inicio;
     } else {
         Node* aux = new Node();
         aux -> dado = elemento;
-        ini -> prev = aux;
-        aux -> next = ini;
+        lista.inicio -> prev = aux;
+        aux -> next = lista.inicio;
         aux -> prev = nullptr;
-        ini = aux;
+        lista.inicio = aux;
     }
 }
 
 // Função para inserir no final
-void insertEnd(Node* &ini, int elemento, Node* &fim){
-    if(ini == nullptr){ // Lista vazia
+void insertEnd(Lista &lista, int elemento){
+    if(lista.inicio == nullptr){ // Lista vazia
         Node* aux = new Node();
         aux -> dado = elemento;
         aux -> next = nullptr;
         aux -> prev = nullptr;
-        ini = aux;
-        fim = ini;
+        lista.inicio = aux;
+        lista.fim = lista.inicio;
     } else {
         Node* aux = new Node();
         aux -> dado = elemento;
         aux -> next = nullptr;
-        aux -> prev = fim;
-        fim -> next = aux;
-        fim = aux;
+        aux -> prev = lista.fim;
+        lista.fim -> next = aux;
+        lista.fim = aux;
     }
 }
 
 // Função para remover do início
-void remove(Node* &ini){
-    if(ini == nullptr){ // Lista vazia
+void remove(Lista &lista){
+    if(lista.inicio == nullptr){ // Lista vazia
         cout << "Lista vazia" << endl;
     } else {
-        if (ini -> next == nullptr){ // Lista com um elemento
-            delete ini;
-            ini = nullptr;
+        if (lista.inicio -> next == nullptr){ // Lista com um elemento
+            delete lista.inicio;
+            lista.inicio = nullptr;
         } else {
-            Node* aux = ini;
-            ini = ini -> next;
-            ini -> prev = nullptr;
+            Node* aux = lista.inicio;
+            lista.inicio = lista.inicio -> next;
+            lista.inicio -> prev = nullptr;
             delete aux;
         }
     }
 }
 
 // Função para remover do final
-void removeEnd(Node* &ini, Node* &fim){
-    if(ini == nullptr || fim == nullptr){ // Lista vazia
+void removeEnd(Lista lista){
+    if(lista.inicio == nullptr || lista.fim == nullptr){ // Lista vazia
         cout << "Lista vazia" << endl;
     } else {
-        if(ini == fim){ // Lista com um elemento
-            delete ini;
-            ini = nullptr;
-            fim = nullptr;
+        if(lista.inicio == lista.fim){ // Lista com um elemento
+            delete lista.inicio;
+            lista.inicio = nullptr;
+            lista.fim = nullptr;
         } else {
-            Node* aux = fim;
-            fim = fim -> prev;
-            fim -> next = nullptr;
+            Node* aux = lista.fim;
+            lista.fim = lista.fim -> prev;
+            lista.fim -> next = nullptr;
             delete aux;
         }
     }
 }
 
 // Função para remover um elemento
-void removeElement(Node* &ini, int elemento, Node* &fim){
+void removeElement(Lista &lista, int elemento){
     bool flag = false;
-    if(ini == nullptr){ // Lista vazia
+    if(lista.inicio == nullptr){ // Lista vazia
         cout << "Lista vazia" << endl;
     } else {
-        Node* aux = ini;
+        Node* aux = lista.inicio;
         while(aux != nullptr){
             if(aux -> dado == elemento){
-                if(aux == ini){ // Remover do início
-                    remove(ini);
+                if(aux == lista.inicio){ // Remover do início
+                    remove(lista);
                     flag = true;
-                } else if(aux == fim){ // Remover do final
-                    removeEnd(ini, fim);
+                    break;
+                } else if(aux == lista.fim){ // Remover do final
+                    removeEnd(lista);
                     flag = true;
+                    break;
                 } else { // Remover do meio
                     aux -> prev -> next = aux -> next;
                     aux -> next -> prev = aux -> prev;
@@ -127,30 +137,30 @@ void removeElement(Node* &ini, int elemento, Node* &fim){
 }
 
 // Função para remover todos os elementos
-void removeAll(Node* &ini, Node* &fim){
-    if(ini == nullptr){ // Lista vazia
+void removeAll(Lista &lista){
+    if(lista.inicio == nullptr){ // Lista vazia
         cout << "Lista vazia" << endl;
     } else {
-        Node* aux = ini;
+        Node* aux = lista.inicio;
         while(aux != nullptr){
-            ini = ini -> next;
+            lista.inicio = lista.inicio -> next;
             delete aux;
-            aux = ini;
+            aux = lista.inicio;
         }
-        ini = nullptr;
-        fim = nullptr;
+        lista.inicio = nullptr;
+        lista.fim = nullptr;
     }
 }
 
 // Função para buscar um elemento
-void search(Node* ini, int elemento){
-    Node* aux = ini;
+void search(Lista lista, int elemento){
+    Node* aux = lista.inicio;
     int i = 0;
     while (aux != nullptr){
         if (aux -> dado == elemento){
             //return i;
             cout << "Elemento encontrado na posicao " << i << endl;
-            print(ini);
+            print(lista);
             return;
         }
         aux = aux -> next;
@@ -163,10 +173,7 @@ void search(Node* ini, int elemento){
 
 // Função principal
 int main(){
-    Node* inicio;
-    Node* fim;
-    inicio = nullptr;
-    fim = nullptr;
+    Lista lista;
 
     int key = 0;
 
@@ -204,43 +211,51 @@ int main(){
                 int elemento;
                 cout << "Digite o elemento a ser inserido: ";
                 cin >> elemento;
-                insert(inicio, elemento, fim);
-                print(inicio);
+                insert(lista, elemento);
+                print(lista);
+                system("pause");
                 break;
             case 2:
                 int elemento2;
                 cout << "Digite o elemento a ser inserido: ";
                 cin >> elemento2;
-                insertEnd(inicio, elemento2, fim);
-                print(inicio);
+                insertEnd(lista, elemento2);
+                print(lista);
+                system("pause");
                 break;
             case 3:
-                remove(inicio);
-                print(inicio);
+                remove(lista);
+                print(lista);
+                system("pause");
                 break;
             case 4:
-                removeEnd(inicio, fim);
-                print(inicio);
+                removeEnd(lista);
+                print(lista);
+                system("pause");
                 break;
             case 5:
                 int elemento3;
                 cout << "Digite o elemento a ser removido: ";
                 cin >> elemento3;
-                removeElement(inicio, elemento3, fim);
-                print(inicio);
+                removeElement(lista, elemento3);
+                print(lista);
+                system("pause");
                 break;
             case 6:
-                removeAll(inicio, fim);
-                print(inicio);
+                removeAll(lista);
+                cout << "A lista foi esvaziada" << endl;
+                print(lista);
                 break;
             case 7:
                 int elemento4;
                 cout << "Digite o elemento a ser buscado: ";
                 cin >> elemento4;
-                search(inicio, elemento4);
+                search(lista, elemento4);
+                system("pause");
                 break;
             case 8:
-                print(inicio);
+                print(lista);
+                system("pause");
                 break;
             case 9:
                 break;
