@@ -1,4 +1,4 @@
-// Implementação de um buffer circular com 10 posições e ponteiro de funções
+
 
 #include <stdio.h>
 #include <stdlib.h>
