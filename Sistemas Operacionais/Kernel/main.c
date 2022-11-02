@@ -1,81 +1,49 @@
+// Adicionar 4 processos, primeiro imprime nome e retorna SUCCESS
+// Segundo imprime matricula e retorna SUCCESS
+// Terceiro imprime "UNIFEI" e retorna REPEAT
+// Quarto imprime "PCO003" e quantidade de vezes executado e retorna REPEAT
 
-
+#include "kernel.h"
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+
+int countP4 = 0;
 
 
-// ponteiro de função
-typedef void (*Function)(void);
-
-typedef struct{
-    // nome do processo
-    char *ProcessName;
-    // tempo
-    int Time;
-    // ponteiro para a função
-    Function function;
-}Process;
-
-// Definição do buffer circular
-#define BUFFERSIZE 10
-
-Process buffer[BUFFERSIZE];
-
-//Definição de ponteiros de acesso
-int start, end;
-
-// Função para adição de processos no buffer	
-void addProc(char *nnome, int ntime, Function nfunction){
-    // checagem de espaço disponível
-    if(((end+1)%BUFFERSIZE) != start){
-        //Atualização da posição atual
-        buffer[end].ProcessName = nnome;
-        buffer[end].Time = ntime;
-        buffer[end].function = nfunction;
-        printf("Processo %s adicionado com sucesso!\n", nnome);
-        end = (end+1)%BUFFERSIZE;
-    } 
+char process1(){
+  printf("Nome:\t\t fulano \n");
+  return SUCCESS;
 }
 
-// Função para remoção de processos do buffer
-void removeProc(){
-    // checagem de processos disponíveis
-    if(start != end){
-        printf("Processo %s removido com sucesso!\n", buffer[start].ProcessName);
-        //Atualização da posição atual
-        start = (start+1)%BUFFERSIZE;
-    }
+char process2(){
+  printf("Matricula:\t xxxxxxxxx \n");
+  return SUCCESS;
 }
 
-void exeProc(){
-    // checa processos disponíveis
-    if(start != end){
-        // executa o processo
-        buffer[start].function();
-    }
+char process3(){
+  printf("UNIFEI\n");
+  return REPEAT;
 }
 
-void func1(){
-    printf("func1 executado com sucesso!\n");
+char process4(){
+  printf("PCO003 Executado : %d vezes.\n", countP4);
+  countP4++;
+  return REPEAT;
 }
 
-void func2(){
-    printf("func2 executado\n");
-}
 
-void func3(){
-    printf("func3 executado\n");
-}
 
-int main (void){
-	addProc("func1", 1, func1);
-	addProc("func2", 2, func2);
-	addProc("func3", 3, func3);
-	exeProc();
-	removeProc();
-	exeProc();
-	removeProc();
-	exeProc();
-	removeProc();
+void main(void){
+   process P1 =  {process1};
+   process P2 =  {process2};
+   process P3 =  {process3};
+   process P4 =  {process4};
+  //initialize the kernel
+  kernelInit();
+  //add processes to the kernel
+  kernelAddProc(&P1);
+  kernelAddProc(&P2);
+  kernelAddProc(&P3);
+  kernelAddProc(&P4);
+  //start the kernel
+  kernelLoop();
 }
