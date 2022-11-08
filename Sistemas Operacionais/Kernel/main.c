@@ -10,7 +10,7 @@ char process1(){
 }
 
 char process2(){
-  printf("Matricula:\txxxxxxx\n");
+  printf("Matricula:\txxxxxxxxxx\n");
   return SUCCESS;
 }
 
@@ -27,8 +27,8 @@ char process4(){
 
 
 void main(void){
-   process P1 =  {process4, 3, "process4"};
-   process P2 =  {process3, 2, "process3"};
+   process P1 =  {process4, 2, "process4"};
+   process P2 =  {process3, 3, "process3"};
    process P3 =  {process2, 0, "process2"};
    process P4 =  {process1, 1, "process1"};
   //initialize the kernel
