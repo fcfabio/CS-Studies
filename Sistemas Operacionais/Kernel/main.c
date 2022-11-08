@@ -1,8 +1,3 @@
-// Adicionar 4 processos, primeiro imprime nome e retorna SUCCESS
-// Segundo imprime matricula e retorna SUCCESS
-// Terceiro imprime "UNIFEI" e retorna REPEAT
-// Quarto imprime "PCO003" e quantidade de vezes executado e retorna REPEAT
-
 #include "kernel.h"
 #include <stdio.h>
 
@@ -10,12 +5,12 @@ int countP4 = 0;
 
 
 char process1(){
-  printf("Nome:\t\t fulano \n");
+  printf("Nome:\t\tFabio Carriao Filho\n");
   return SUCCESS;
 }
 
 char process2(){
-  printf("Matricula:\t xxxxxxxxx \n");
+  printf("Matricula:\txxxxxxx\n");
   return SUCCESS;
 }
 
@@ -31,12 +26,11 @@ char process4(){
 }
 
 
-
 void main(void){
-   process P1 =  {process1};
-   process P2 =  {process2};
-   process P3 =  {process3};
-   process P4 =  {process4};
+   process P1 =  {process4, 3, "process4"};
+   process P2 =  {process3, 2, "process3"};
+   process P3 =  {process2, 0, "process2"};
+   process P4 =  {process1, 1, "process1"};
   //initialize the kernel
   kernelInit();
   //add processes to the kernel

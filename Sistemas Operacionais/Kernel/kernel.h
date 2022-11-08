@@ -12,6 +12,8 @@ typedef char(*ptrFunc)(void);
 //process struct
 typedef struct {
 	ptrFunc func;
+	int priority;
+	char name[10];
 } process;
 
 //Kernel Functions
