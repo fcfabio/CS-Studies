@@ -36,7 +36,7 @@ int last; //ultimo elemento da heap
 
 
 void print(int *vet){
-    for(int i = 0; i < SIZE; i++){
+    for(int i = 0; i < last; i++){
         cout << vet[i] << " ";
     }
     cout << endl;
@@ -69,8 +69,8 @@ void heapfy_menor(int *vet, int n, int pai){
 }
 
 void create_heap_menor(int *vet, int n){
-    // para cada nó que não é folha
-    for(int i = n/2-1; i >= 0; i--){
+    //for(int i = n/2-1; i >= 0; i--){ //para cada nó que não é folha
+    for(int i = n; i >= 0; i--){ // Garantir ajuste mesmo que itens estejam 100% desordenados
         heapfy_menor(vet, n, i); // ajusta a heap de baixo pra cima
     }
 }
@@ -97,7 +97,7 @@ bool full(int *vet){
 }
 
 void push(int *vet, int elemento){
-    if full(vet){
+    if (!full(vet)){
         vet[last] = elemento;
         last++;
         create_heap_menor(vet, last);
@@ -109,13 +109,13 @@ void push(int *vet, int elemento){
 
 int pop(int *vet){
     int aux = -1;
-    if empty(vet){
+    if (empty(vet)){
         cout << "Heap vazia" << endl;
     }else{
         aux = vet[0];
         vet[0] = vet[last-1];
         last--;
-        heapfy_menor(vet, last, 0);
+        create_heap_menor(vet, last);
     }
     print(vet);
     return aux;
@@ -130,28 +130,67 @@ int top(int *vet){
 int main(){
     int vetor[SIZE]; //HEAP
     last = 0;
-    
-    for(int i = 0; i<SIZE; i++){
-        vetor[i] = rand() % 100;
+    int elemento = 0;
+    while(elemento != -1){
+        cout << "Entre com os elementos da heap (-1 para sair): ";
+        cin >> elemento;
+        if (elemento != -1){
+            push(vetor, elemento);
+        }
     }
-
-    cout << "Heap desajustada: " << endl;
+    cout << "\nHeap criada: ";
     print(vetor);
 
-    //Ordena
-    //heapsort(vetor,N);
-    create_heap_maior(vetor, SIZE);
+    cout << "Escolha uma opcao:" << endl;
+    cout << "1 - Inserir elemento" << endl;
+    cout << "2 - Remover elemento" << endl;
+    cout << "3 - Mostrar elemento do topo" << endl;
+    cout << "4 - Verificar se a Heap esta vazia" << endl;
+    cout << "5 - Verificar se a Heap esta cheia" << endl;
+    cout << "6 - Imprimir Heap" << endl;
+    cout << "7 - Sair" << endl;
 
-    cout << "Heap ajustada (maior): " << endl;
-    print(vetor);
-
-    create_heap_menor(vetor, SIZE);
-    cout << "Heap ajustada (menor): " << endl;
-    print(vetor);
-
-    cout << "Heap sort: " << endl;
-    heapsort(vetor, SIZE);
-    print(vetor);
+    int opcao = 0;
+    while(opcao != 7){
+        cout << "Opcao: ";
+        cin >> opcao;
+        switch(opcao){
+            case 1:
+                cout << "Entre com o elemento a ser inserido: ";
+                cin >> elemento;
+                push(vetor, elemento);
+                break;
+            case 2:
+                cout << "Elemento removido: " << pop(vetor) << endl;
+                break;
+            case 3:
+                cout << "Elemento do topo: " << top(vetor) << endl;
+                break;
+            case 4:
+                if(empty(vetor)){
+                    cout << "A Heap esta vazia" << endl;
+                }else{
+                    cout << "A Heap nao esta vazia" << endl;
+                }
+                break;
+            case 5:
+                if(full(vetor)){
+                    cout << "A Heap esta cheia" << endl;
+                }else{
+                    cout << "A Heap nao esta cheia" << endl;
+                }
+                break;
+            case 6:
+                print(vetor);
+                break;
+            case 7:
+                cout << "Saindo..." << endl;
+                break;
+            default:
+                cout << "Opcao invalida" << endl;
+                break;
+        }
+    }
 
     return 0;
 }
