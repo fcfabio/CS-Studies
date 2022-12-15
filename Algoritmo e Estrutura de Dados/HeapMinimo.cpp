@@ -48,7 +48,7 @@ void heapfy_menor(int *vet, int n, int pai){
     int dir = 2*pai + 2; //filho direito
     int menor, aux;
 
-    //Escolhe maior valor entre filhos
+    //Escolhe menor valor entre filhos
     menor = pai;
     if((esq < n) && (vet[esq] < vet[menor])){
         menor = esq;
@@ -57,7 +57,7 @@ void heapfy_menor(int *vet, int n, int pai){
         menor = dir;
     }
 
-    // se um dos filhos for maior que o pai, troca
+    // se um dos filhos for menor que o pai, troca
     if(menor != pai){
         aux = vet[menor];
         vet[menor] = vet[pai];
