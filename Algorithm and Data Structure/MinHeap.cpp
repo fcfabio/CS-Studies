@@ -1,24 +1,25 @@
 /*
-   HEAP é uma árvore binária completa, ou seja, uma árvore binaria onde cada nivel
-   é preenchido da esquerda pra direita e deve estar completo antes que o próximo
-   nível seja preenchido.
-   Há uma restrição especial: cada nó da heap deve conter um valor maior (ou menor)
-   do que todos os valores contidos por nós descendentes dele.
+   HEAP is a complete binary tree, that is, a binary tree where each level
+   is filled from left to right and must be complete before the next level 
+   is filled. There is a special constraint: each node in the heap must 
+   contain a value greater (or smaller) than all the values contained by
+   its descendant nodes.
 
-    Pode ser utilizado em:
-                       - Simulações
-                       - Compressão de dados
-                       - Algoritmos de grafos
-                       - IA
-                       - Estatística
-                       - SO
+   It can be used in:
+      - Simulations
+      - Data compression
+      - Graph algorithms
+      - AI
+      - Statistics
+      - OS
 
-    Devido ao fato de a HEAP ser "previsivel", é possível representá-la de forma
-    através de um único vetor.
-    Pai: [(j-1)/2]
-    Filhos: [2j+1] e [2j+2]
+   Due to the fact that the HEAP is "predictable", it is possible to 
+   represent it using a single vector.
+   Parent: [(j-1)/2]
+   Children: [2j+1] and [2j+2]
 
-    Primeiro nó que tem filhos, considerando leitura de baixo pra cima e da direita pra esquerda: n/2 - 1
+   First node with children, considering reading from bottom to top and 
+   from right to left: n/2 - 1
 
 */
 
