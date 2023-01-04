@@ -1,14 +1,16 @@
 /*
-Pilhas são muito utilizadas em compiladores para verificar, por exemplo, se expressões são bem-formadas. Considere o problema de decidir se uma dada sequência de parênteses/chaves é bem-formada.
 
-Por exemplo, a sequência abaixo é bem formada:
+Stacks are frequently used in compilers to check, for example, if expressions 
+are well-formed. Consider the problem of deciding whether a given sequence of 
+parentheses/braces is well-formed.
+
+For example, the following sequence is well-formed:
 (  (  )  {  (  )  }  )
 
-
-Enquanto essa outra não é:
+While this one is not:
 (  {  )  }
 
-Escreva todo o código de da pilha (funções push, pop, empty e top) e a utilize para resolver o problema.
+Write the entire stack code (push, pop, empty, and top functions) and use it to solve the problem.
 
 */
 
